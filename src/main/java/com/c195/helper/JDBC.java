@@ -1,4 +1,4 @@
-package main.dbclientappv5.helper;
+package com.c195.helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,8 @@ public abstract class JDBC {
         }
         catch(Exception e)
         {
-            System.out.println("Error:" + e.getMessage());
+            //System.out.println("Error:" + e.getMessage());
+            e.printStackTrace();
         }
     }
 

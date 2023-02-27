@@ -1,10 +1,10 @@
-package main.dbclientappv5.helper;
+package com.c195.helper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FruitsQuery {
+public abstract class FruitsQuery {
 
     public static int insert(String fruitName, int colorId) throws SQLException {
         String sql = "INSERT INTO FRUITS (Fruit_Name, Color_ID) VALUES(?, ?)";

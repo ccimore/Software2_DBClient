@@ -1,4 +1,4 @@
-package main.dbclientappv5;
+package com.c195.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

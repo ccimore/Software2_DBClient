@@ -1,11 +1,11 @@
-package main.dbclientappv5;
+package com.c195;
 
+import com.c195.helper.FruitsQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.dbclientappv5.helper.FruitsQuery;
-import main.dbclientappv5.helper.JDBC;
+import com.c195.helper.JDBC;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,9 +27,9 @@ public class Main extends Application {
         int rowsAffected = FruitsQuery.insert("Cherries", 3);
 
         if(rowsAffected > 0){
-            System.out.println("Delete Successful!");
+            System.out.println("Insert Successful!");
         } else {
-            System.out.println("Delete Failed!");
+            System.out.println("Insert Failed!");
         }
 
         /*

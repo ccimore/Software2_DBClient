@@ -4,6 +4,8 @@ module main.dbclientappv5 {
     requires java.sql;
 
 
-    opens main.dbclientappv5 to javafx.fxml;
-    exports main.dbclientappv5;
+    opens com.c195 to javafx.fxml;
+    exports com.c195;
+    exports com.c195.controller;
+    opens com.c195.controller to javafx.fxml;
 }
