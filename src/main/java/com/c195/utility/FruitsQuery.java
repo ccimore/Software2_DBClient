@@ -1,4 +1,4 @@
-package com.c195.helper;
+package com.c195.utility;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +28,14 @@ public abstract class FruitsQuery {
         String sql = "DELETE FROM FRUITS WHERE Fruit_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, fruitId);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+
+    public static int delete(String fruitName) throws SQLException {
+        String sql = "DELETE FROM FRUITS WHERE Fruit_Name = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, fruitName);
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }

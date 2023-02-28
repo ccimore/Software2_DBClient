@@ -1,4 +1,4 @@
-package com.c195.helper;
+package com.c195.utility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
