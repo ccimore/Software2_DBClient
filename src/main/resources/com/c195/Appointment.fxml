@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.c195.controller.AppointmentController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.c195.controller.AppointmentController">
+   <children>
+      <Label layoutX="343.0" layoutY="40.0" text="Appointment">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Button fx:id="exitButton" layoutX="420.0" layoutY="550.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Label layoutX="25.0" layoutY="125.0" text="Appointment ID" />
+      <Label layoutX="25.0" layoutY="165.0" text="Title" />
+      <TextField alignment="CENTER" disable="true" editable="false" layoutX="145.0" layoutY="120.0" promptText="Auto Gen - Disabled" />
+      <TextField layoutX="145.0" layoutY="160.0" />
+      <Label layoutX="25.0" layoutY="205.0" text="Description" />
+      <Label layoutX="25.0" layoutY="245.0" text="Location" />
+      <Label layoutX="25.0" layoutY="285.0" text="Type" />
+      <Label layoutX="25.0" layoutY="325.0" text="Contact" />
+      <Label layoutX="25.0" layoutY="365.0" text="Customer ID" />
+      <Label layoutX="25.0" layoutY="405.0" text="User ID" />
+      <Label layoutX="25.0" layoutY="445.0" text="Start Date" />
+      <Label layoutX="25.0" layoutY="485.0" text="Start Time" />
+      <Label layoutX="450.0" layoutY="445.0" text="End Date" />
+      <Label layoutX="450.0" layoutY="485.0" text="End Time" />
+      <TextField layoutX="145.0" layoutY="200.0" />
+      <TextField layoutX="145.0" layoutY="240.0" />
+      <TextField layoutX="145.0" layoutY="280.0" />
+      <DatePicker layoutX="145.0" layoutY="440.0" />
+      <ComboBox layoutX="145.0" layoutY="480.0" prefWidth="150.0" />
+      <DatePicker layoutX="570.0" layoutY="440.0" />
+      <ComboBox layoutX="570.0" layoutY="480.0" prefWidth="150.0" />
+      <Button layoutX="340.0" layoutY="550.0" mnemonicParsing="false" text="Save">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ComboBox layoutX="145.0" layoutY="320.0" prefWidth="150.0" />
+      <ComboBox layoutX="145.0" layoutY="360.0" prefWidth="150.0" />
+      <ComboBox layoutX="145.0" layoutY="400.0" prefWidth="150.0" />
+   </children>
 </AnchorPane>

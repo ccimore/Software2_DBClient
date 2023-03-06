@@ -1,5 +1,7 @@
 package com.c195.model;
 
+import java.time.LocalDateTime;
+
 public class Customer {
 
     private int customerId;

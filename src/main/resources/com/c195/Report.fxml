@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.c195.controller.ReportController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.c195.controller.ReportController">
+   <children>
+      <Label layoutX="467.0" layoutY="6.0" text="Reports">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Button fx:id="exitButton" layoutX="479.0" layoutY="760.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+   </children>
 </AnchorPane>

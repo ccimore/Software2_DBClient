@@ -1,10 +1,38 @@
 package com.c195.utility;
 
+import com.c195.model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class DBCustomer {
+
+    public static ObservableList<Customer> getAllCustomers() throws SQLException{
+
+        String sql = "SELECT * FROM CUSTOMERS";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            int customerId = rs.getInt("Customer_ID");
+            String customerName = rs.getString("Customer_Name");
+            String customerAddress = rs.getString("Address");
+            String customerPostalCode = rs.getString("Postal_Code");
+            String customerPhone = rs.getString("Phone");
+            int customerDivisionId = rs.getInt("Division_ID");
+
+            Customer customer = new Customer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, customerDivisionId);
+            customerObservableList.add(customer);
+        }
+        return customerObservableList;
+    }
+
 
     public static int insert(String customerName, String address, String postalCode, String phone, int divisionID) throws SQLException {
         String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?)";

@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.c195.controller.AddCustomerController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.c195.controller.AddCustomerController">
+   <children>
+      <Label layoutX="340.0" layoutY="30.0" text="Add Customer">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Button fx:id="exitButton" layoutX="420.0" layoutY="350.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Label layoutX="25.0" layoutY="95.0" text="Customer ID" />
+      <Label layoutX="25.0" layoutY="135.0" text="Customer Name" />
+      <Label layoutX="25.0" layoutY="175.0" text="Address" />
+      <Label layoutX="25.0" layoutY="215.0" text="Postal Code" />
+      <Label layoutX="25.0" layoutY="255.0" text="Country" />
+      <Label layoutX="450.0" layoutY="135.0" text="Phone Number" />
+      <Label layoutX="450.0" layoutY="255.0" text="State/Province" />
+      <Button layoutX="340.0" layoutY="350.0" mnemonicParsing="false" text="Save">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <TextField alignment="CENTER" disable="true" layoutX="145.0" layoutY="90.0" promptText="Auto Gen - Disabled" />
+      <TextField layoutX="145.0" layoutY="130.0" />
+      <TextField layoutX="145.0" layoutY="170.0" />
+      <TextField layoutX="145.0" layoutY="210.0" />
+      <TextField layoutX="570.0" layoutY="130.0" />
+      <ComboBox layoutX="145.0" layoutY="250.0" prefWidth="150.0" />
+      <ComboBox layoutX="570.0" layoutY="250.0" prefWidth="150.0" />
+   </children>
 </AnchorPane>

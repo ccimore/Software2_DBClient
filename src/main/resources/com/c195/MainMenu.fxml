@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.c195.controller.MainMenuController">
+   <children>
+      <Label layoutX="14.0" layoutY="7.0" text="iCalendar">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutY="50.0" prefHeight="376.0" prefWidth="1003.0" style="-fx-border-color: gray;">
+         <children>
+            <TableView fx:id="apptTable" layoutX="8.0" layoutY="61.0" prefHeight="252.0" prefWidth="987.0">
+              <columns>
+                <TableColumn fx:id="apptIDCol" prefWidth="45.000003814697266" text="ID" />
+                <TableColumn fx:id="apptTitleCol" prefWidth="109.99999237060547" text="Title" />
+                  <TableColumn fx:id="apptDescriptionCol" prefWidth="161.20001220703125" text="Description" />
+                  <TableColumn fx:id="apptLocationCol" prefWidth="129.0" text="Location" />
+                  <TableColumn fx:id="apptTypeCol" prefWidth="68.5999755859375" text="Type" />
+                  <TableColumn fx:id="apptStartCol" prefWidth="116.800048828125" text="Start" />
+                  <TableColumn fx:id="apptEndCol" prefWidth="109.2000732421875" text="End" />
+                  <TableColumn fx:id="apptCustIDCol" prefWidth="93.199951171875" text="Customer ID" />
+                  <TableColumn fx:id="apptUserIDCol" minWidth="9.5999755859375" prefWidth="60.60009765625" text="User ID" />
+                  <TableColumn fx:id="apptContactIDCol" minWidth="9.5999755859375" prefWidth="89.0" text="Contact ID" />
+              </columns>
+            </TableView>
+            <Label layoutX="452.0" layoutY="21.0" text="Appointments">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="apptAddButton" layoutX="411.0" layoutY="329.0" mnemonicParsing="false" onAction="#onActionApptAddButton" text="ADD" />
+            <Button fx:id="apptUpdateButton" layoutX="469.0" layoutY="329.0" mnemonicParsing="false" onAction="#onActionApptUpdateButton" text="UPDATE" />
+            <Button fx:id="apptDeleteButton" layoutX="546.0" layoutY="329.0" mnemonicParsing="false" onAction="#onActionApptDeleteButton" text="DELETE" />
+            <RadioButton fx:id="apptWeekRadioB" layoutX="680.0" layoutY="333.0" mnemonicParsing="false" onAction="#onActionApptWeekRadioB" text="Week">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Tgroup" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="apptMonthRadioB" layoutX="760.0" layoutY="333.0" mnemonicParsing="false" onAction="#onActionMonthRadioB" text="Month" toggleGroup="$Tgroup" />
+            <RadioButton fx:id="apptAllRadioB" layoutX="840.0" layoutY="333.0" mnemonicParsing="false" onAction="#onActionApptAllRadioB" selected="true" text="All" toggleGroup="$Tgroup" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="425.0" prefHeight="311.0" prefWidth="1003.0" style="-fx-border-color: gray;">
+         <children>
+            <TableView fx:id="custTable" layoutX="67.0" layoutY="53.0" prefHeight="198.0" prefWidth="866.0">
+              <columns>
+                <TableColumn fx:id="custIDCol" prefWidth="54.200016021728516" text="ID" />
+                <TableColumn fx:id="custNameCol" prefWidth="183.99998474121094" text="Name" />
+                  <TableColumn fx:id="custAddressCol" prefWidth="186.39996337890625" text="Address" />
+                  <TableColumn fx:id="custPostalCodeCol" prefWidth="126.60012817382812" text="Postal code" />
+                  <TableColumn fx:id="custDivisionCol" prefWidth="135.7999267578125" text="Division ID" />
+                  <TableColumn fx:id="custPhoneCol" prefWidth="178.5999755859375" text="Phone" />
+              </columns>
+            </TableView>
+            <Label layoutX="465.0" layoutY="20.0" text="Customers">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="customersAddButton" layoutX="410.0" layoutY="265.0" mnemonicParsing="false" onAction="#onActionCustomersAddButton" text="ADD" />
+            <Button fx:id="customersUpdateButton" layoutX="470.0" layoutY="265.0" mnemonicParsing="false" onAction="#onActionCustomersUpdateButton" text="UPDATE" />
+            <Button fx:id="custDeleteButton" layoutX="550.0" layoutY="265.0" mnemonicParsing="false" onAction="#onActionCustDeleteButton" text="DELETE" />
+         </children></AnchorPane>
+      <Button fx:id="reportsButton" layoutX="426.0" layoutY="755.0" mnemonicParsing="false" onAction="#onActionReportsButton" prefHeight="30.0" prefWidth="148.0" text="REPORTS">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="logoutButton" layoutX="892.0" layoutY="755.0" mnemonicParsing="false" onAction="#onActionLogoutButton" text="LOGOUT">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+   </children>
+</AnchorPane>
