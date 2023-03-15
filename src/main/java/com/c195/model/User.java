@@ -12,9 +12,7 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+    public int getUserId() { return userId; }
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -35,4 +33,10 @@ public class User {
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
+
+    @Override
+    public String toString(){
+        return (userName + " (ID: " +Integer.toString(userId) + ")");
+    }
+
 }

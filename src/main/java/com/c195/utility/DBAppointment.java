@@ -54,6 +54,32 @@ public abstract class DBAppointment {
         return allAppointmentsList;
     }
 
+    public static ObservableList<Appointment> getApptByContactID(int contactID) throws SQLException {
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, contactID);
+        ResultSet rs = ps.executeQuery();
+
+        ObservableList<Appointment> apptByContactList = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            int apptID = rs.getInt("Appointment_ID");
+            String apptTitle = rs.getString("Title");
+            String apptDescription = rs.getString("Description");
+            String apptLocation = rs.getString("Location");
+            String apptType = rs.getString("Type");
+            LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+            int customerID = rs.getInt("Customer_ID");
+            int userID = rs.getInt("User_ID");
+            int contID = rs.getInt("Contact_ID");
+
+            Appointment appointment = new Appointment(apptID, apptTitle, apptDescription, apptLocation, apptType, start, end, customerID, userID, contID);
+            apptByContactList.add(appointment);
+        }
+
+        return apptByContactList;
+    }
 
     public static int deleteAppointment(int apptID) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE APPOINTMENT_ID = ?";
@@ -63,6 +89,13 @@ public abstract class DBAppointment {
         return rowsAffected;
     }
 
+    public static int deleteAppointmentByCustID(int custID) throws SQLException {
+        String sql = "DELETE FROM APPOINTMENTS WHERE CUSTOMER_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, custID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
 
     public static int insert(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String createBY, LocalDateTime updateDate, String updateBy, int custID, int userID, int contactID) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -85,11 +118,21 @@ public abstract class DBAppointment {
         return rowsAffected;
     }
 
-    public static int update(int customerID, String customerName) throws SQLException {
-        String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
+    public static int update(int apptID, String apptTitle, String apptDescription, String apptLocation, String apptType, LocalDateTime apptStart, LocalDateTime apptEnd, int apptCustID, int apptUserID, int apptContactID) throws SQLException {
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, customerName);
-        ps.setInt(2, customerID);
+        ps.setString(1, apptTitle);
+        ps.setString(2, apptDescription);
+        ps.setString(3, apptLocation);
+        ps.setString(4, apptType);
+        ps.setTimestamp(5, Timestamp.valueOf(apptStart));
+        ps.setTimestamp(6, Timestamp.valueOf(apptEnd));
+        ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(8, "admin");
+        ps.setInt(9, apptCustID);
+        ps.setInt(10, apptUserID);
+        ps.setInt(11, apptContactID);
+        ps.setInt(12, apptID);
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
@@ -108,18 +151,5 @@ public abstract class DBAppointment {
         }
     }
 
-    public static void select(int colorId) throws SQLException {
-        String sql = "SELECT * FROM CUSTOMERS WHERE Division_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, colorId);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            int fruitId = rs.getInt("Customer_ID");
-            String fruitName = rs.getString("Customer_Name");
-            int colorIdFK = rs.getInt("Division_ID");
-            System.out.print(fruitId + " | ");
-            System.out.print(fruitName + " | ");
-            System.out.print(colorIdFK + "\n");
-        }
-    }
+
 }

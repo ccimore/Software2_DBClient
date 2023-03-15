@@ -2,30 +2,30 @@ package com.c195.model;
 
 public class FirstLevelDivision {
 
-    private int FirstLevelDivisionId;
-    private String Division;
+    private int firstLevelDivisionId;
+    private String division;
     public int FLDivCountryId;
 
     public FirstLevelDivision(int FirstLevelDivisionId, String division, int FLDivCountryId) {
-        this.FirstLevelDivisionId = FirstLevelDivisionId;
-        this.Division = division;
+        this.firstLevelDivisionId = FirstLevelDivisionId;
+        this.division = division;
         this.FLDivCountryId = FLDivCountryId;
     }
 
     public int getFirstLevelDivisionId() {
-        return FirstLevelDivisionId;
+        return firstLevelDivisionId;
     }
 
     public void setFirstLevelDivisionId(int firstLevelDivisionId) {
-        FirstLevelDivisionId = firstLevelDivisionId;
+        this.firstLevelDivisionId = firstLevelDivisionId;
     }
 
     public String getDivision() {
-        return Division;
+        return division;
     }
 
     public void setDivision(String division) {
-        Division = division;
+        this.division = division;
     }
 
     public int getFLDivCountryId() {
@@ -35,4 +35,10 @@ public class FirstLevelDivision {
     public void setFLDivCountryId(int FLDivCountryId) {
         this.FLDivCountryId = FLDivCountryId;
     }
+
+    @Override
+    public String toString(){
+        return (division + " (ID: " +Integer.toString(firstLevelDivisionId) + ")");
+    }
+
 }

@@ -46,11 +46,15 @@ public abstract class DBCustomer {
         return rowsAffected;
     }
 
-    public static int update(int customerID, String customerName) throws SQLException {
-        String sql = "UPDATE CUSTOMERS SET Customer_Name = ? WHERE Customer_ID = ?";
+    public static int update(int customerID, String customerName, String customerAddress, String postalCode, String phone, int divID) throws SQLException {
+        String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, customerName);
-        ps.setInt(2, customerID);
+        ps.setString(2, customerAddress);
+        ps.setString(3, postalCode);
+        ps.setString(4, phone);
+        ps.setInt(5, divID);
+        ps.setInt(6, customerID);
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }

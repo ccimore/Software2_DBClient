@@ -10,9 +10,60 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Button fx:id="exitButton" layoutX="479.0" layoutY="760.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
+      <Button fx:id="exitButton" layoutX="467.0" layoutY="756.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
          <font>
             <Font size="14.0" />
          </font></Button>
+      <TableView fx:id="contactReportTable" layoutX="37.0" layoutY="75.0" prefHeight="200.0" prefWidth="926.0">
+        <columns>
+          <TableColumn fx:id="apptIDCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="titleCol" prefWidth="115.20001220703125" text="Title" />
+            <TableColumn fx:id="typeCol" prefWidth="80.00001525878906" text="Type" />
+            <TableColumn fx:id="descriptionCol" prefWidth="260.79998779296875" text="Description" />
+            <TableColumn fx:id="startCol" prefWidth="155.7999267578125" text="Start" />
+            <TableColumn fx:id="endCol" prefWidth="152.5999755859375" text="End" />
+            <TableColumn fx:id="custIDCol" prefWidth="85.0" text="Customer ID" />
+        </columns>
+      </TableView>
+      <ComboBox fx:id="contactCombo" layoutX="425.0" layoutY="293.0" onAction="#onActionContactCombo" prefWidth="150.0" promptText="Choose Contact" />
+      <Label layoutX="369.0" layoutY="297.0" text="Contact" />
+      <TableView fx:id="typeTotalTable" layoutX="37.0" layoutY="400.0" prefHeight="291.0" prefWidth="262.0">
+        <columns>
+          <TableColumn fx:id="typeTotalCol" prefWidth="182.40002059936523" text="Type" />
+            <TableColumn fx:id="totalCol" prefWidth="77.59999084472656" text="Total" />
+        </columns>
+      </TableView>
+      <TableView fx:id="divisionTable" layoutX="700.0" layoutY="400.0" prefHeight="291.0" prefWidth="262.0">
+        <columns>
+          <TableColumn fx:id="divisionCol" prefWidth="185.800048828125" text="Division" />
+          <TableColumn fx:id="divisionTotalCustCol" prefWidth="75.20004882812498" text="Total" />
+        </columns>
+      </TableView>
+      <Label layoutX="83.0" layoutY="366.0" text="Appointment Total By Type">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="753.0" layoutY="366.0" text="Customer Total By Division">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="432.0" layoutY="48.0" text="Appointments By Contact">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="monthTotalTable" layoutX="369.0" layoutY="400.0" prefHeight="291.0" prefWidth="262.0">
+        <columns>
+          <TableColumn fx:id="monthCol" prefWidth="184.0" text="Month" />
+          <TableColumn fx:id="monthTotalCol" prefWidth="76.39996337890625" text="Total" />
+        </columns>
+      </TableView>
+      <Label layoutX="421.0" layoutY="366.0" text="Appointment Total By Month">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

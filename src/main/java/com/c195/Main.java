@@ -2,15 +2,14 @@ package com.c195;
 
 import com.c195.model.Appointment;
 import com.c195.model.Customer;
-import com.c195.utility.DBAppointment;
-import com.c195.utility.DBCustomer;
-import com.c195.utility.FruitsQuery;
+import com.c195.model.DivisionTotal;
+import com.c195.model.TypeTotal;
+import com.c195.utility.*;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import com.c195.utility.JDBC;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,6 +29,27 @@ public class Main extends Application {
 
         JDBC.openConnection();
 
+
+
+
+        ObservableList<DivisionTotal> divList = DBReport.getAllDivisionTotals();
+
+        if (divList != null) {
+            System.out.println("List created.");
+        }
+
+
+
+        /*
+
+
+
+        LocalDateTime UTCtime = TimeHelper.convertToUTC(LocalDateTime.now());
+        System.out.println(UTCtime);
+
+
+
+
         int rowsAffected = FruitsQuery.insert("Cherries", 3);
         if(rowsAffected > 0){
             System.out.println("Insert Successful!");
@@ -41,9 +61,10 @@ public class Main extends Application {
         if(rowsAffectedDelete > 0){
             System.out.println("Delete Successful!");
         } else {
-            System.out.println("Delete Failed!");
-        }
-/*
+            System.out.println("Delete Failed!");       }
+
+
+
         ObservableList<Customer> custList = DBCustomer.getAllCustomers();
 
         if (custList != null) {
@@ -56,8 +77,6 @@ public class Main extends Application {
             System.out.println("List created.");
         }
 
- */
-
 
         int rowsApptInsert = DBAppointment.insert("Test", "Test description", "Test Location", "Test Session", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), "SCRIPT", LocalDateTime.now(), "SCRIPT", 2, 2, 2);
         if(rowsApptInsert > 0){
@@ -66,7 +85,9 @@ public class Main extends Application {
             System.out.println("Insert Failed!");
         }
 
-/*
+
+
+
         int rowsApptDelete = DBAppointment.deleteAppointment(4);
         if(rowsApptDelete > 0){
             System.out.println("Delete Successful!");
@@ -74,10 +95,13 @@ public class Main extends Application {
             System.out.println("Delete Failed!");
         }
 
- */
+
 
         Appointment appt1 = new Appointment(1, "sfl", "sldjfgl", "sldjf", "lsdfjkls", LocalDateTime.now(),LocalDateTime.now(), 3, 3, 3);
         System.out.println(appt1.getApptContactId());
+
+
+         */
 
 
         System.out.println("Program Launch!");

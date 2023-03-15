@@ -16,8 +16,8 @@
          </font></Button>
       <Label layoutX="25.0" layoutY="125.0" text="Appointment ID" />
       <Label layoutX="25.0" layoutY="165.0" text="Title" />
-      <TextField alignment="CENTER" disable="true" editable="false" layoutX="145.0" layoutY="120.0" promptText="Auto Gen - Disabled" />
-      <TextField layoutX="145.0" layoutY="160.0" />
+      <TextField fx:id="apptIDText" alignment="CENTER" disable="true" editable="false" layoutX="145.0" layoutY="120.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="apptTitleText" layoutX="145.0" layoutY="160.0" />
       <Label layoutX="25.0" layoutY="205.0" text="Description" />
       <Label layoutX="25.0" layoutY="245.0" text="Location" />
       <Label layoutX="25.0" layoutY="285.0" text="Type" />
@@ -28,20 +28,20 @@
       <Label layoutX="25.0" layoutY="485.0" text="Start Time" />
       <Label layoutX="450.0" layoutY="445.0" text="End Date" />
       <Label layoutX="450.0" layoutY="485.0" text="End Time" />
-      <TextField layoutX="145.0" layoutY="200.0" />
-      <TextField layoutX="145.0" layoutY="240.0" />
-      <TextField layoutX="145.0" layoutY="280.0" />
-      <DatePicker layoutX="145.0" layoutY="440.0" />
-      <ComboBox layoutX="145.0" layoutY="480.0" prefWidth="150.0" />
-      <DatePicker layoutX="570.0" layoutY="440.0" />
-      <ComboBox layoutX="570.0" layoutY="480.0" prefWidth="150.0" />
-      <Button layoutX="340.0" layoutY="550.0" mnemonicParsing="false" text="Save">
+      <TextField fx:id="apptDescriptionText" layoutX="145.0" layoutY="200.0" />
+      <TextField fx:id="apptLocationText" layoutX="145.0" layoutY="240.0" />
+      <TextField fx:id="apptTypeText" layoutX="145.0" layoutY="280.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="145.0" layoutY="440.0" />
+      <ComboBox fx:id="startTimeCombo" layoutX="145.0" layoutY="480.0" prefWidth="150.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="570.0" layoutY="440.0" />
+      <ComboBox fx:id="endTimeCombo" layoutX="570.0" layoutY="480.0" prefWidth="150.0" />
+      <Button fx:id="saveButton" layoutX="340.0" layoutY="550.0" mnemonicParsing="false" onAction="#onActionSaveButton" text="Save">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ComboBox layoutX="145.0" layoutY="320.0" prefWidth="150.0" />
-      <ComboBox layoutX="145.0" layoutY="360.0" prefWidth="150.0" />
-      <ComboBox layoutX="145.0" layoutY="400.0" prefWidth="150.0" />
+      <ComboBox fx:id="contactIDCombo" layoutX="145.0" layoutY="320.0" prefWidth="150.0" />
+      <ComboBox fx:id="customerIDCombo" layoutX="145.0" layoutY="360.0" prefWidth="150.0" />
+      <ComboBox fx:id="userIDCombo" layoutX="145.0" layoutY="400.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

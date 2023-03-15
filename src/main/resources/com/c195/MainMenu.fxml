@@ -11,9 +11,9 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <AnchorPane layoutY="50.0" prefHeight="376.0" prefWidth="1003.0" style="-fx-border-color: gray;">
+      <AnchorPane layoutY="50.0" prefHeight="678.0" prefWidth="1003.0" style="-fx-border-color: gray;">
          <children>
-            <TableView fx:id="apptTable" layoutX="8.0" layoutY="61.0" prefHeight="252.0" prefWidth="987.0">
+            <TableView fx:id="apptTable" layoutX="8.0" layoutY="61.0" prefHeight="347.0" prefWidth="987.0">
               <columns>
                 <TableColumn fx:id="apptIDCol" prefWidth="45.000003814697266" text="ID" />
                 <TableColumn fx:id="apptTitleCol" prefWidth="109.99999237060547" text="Title" />
@@ -32,38 +32,42 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="apptAddButton" layoutX="411.0" layoutY="329.0" mnemonicParsing="false" onAction="#onActionApptAddButton" text="ADD" />
-            <Button fx:id="apptUpdateButton" layoutX="469.0" layoutY="329.0" mnemonicParsing="false" onAction="#onActionApptUpdateButton" text="UPDATE" />
-            <Button fx:id="apptDeleteButton" layoutX="546.0" layoutY="329.0" mnemonicParsing="false" onAction="#onActionApptDeleteButton" text="DELETE" />
-            <RadioButton fx:id="apptWeekRadioB" layoutX="680.0" layoutY="333.0" mnemonicParsing="false" onAction="#onActionApptWeekRadioB" text="Week">
+            <Button fx:id="apptAddButton" layoutX="411.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionApptAddButton" text="ADD" />
+            <Button fx:id="apptUpdateButton" layoutX="469.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionApptUpdateButton" text="UPDATE" />
+            <Button fx:id="apptDeleteButton" layoutX="546.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionApptDeleteButton" text="DELETE" />
+            <RadioButton fx:id="apptWeekRadioB" layoutX="680.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionApptWeekRadioB" text="Week">
                <toggleGroup>
                   <ToggleGroup fx:id="Tgroup" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="apptMonthRadioB" layoutX="760.0" layoutY="333.0" mnemonicParsing="false" onAction="#onActionMonthRadioB" text="Month" toggleGroup="$Tgroup" />
-            <RadioButton fx:id="apptAllRadioB" layoutX="840.0" layoutY="333.0" mnemonicParsing="false" onAction="#onActionApptAllRadioB" selected="true" text="All" toggleGroup="$Tgroup" />
+            <RadioButton fx:id="apptMonthRadioB" layoutX="760.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionMonthRadioB" text="Month" toggleGroup="$Tgroup" />
+            <RadioButton fx:id="apptAllRadioB" layoutX="840.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionApptAllRadioB" selected="true" text="All" toggleGroup="$Tgroup" />
+            <TextField fx:id="apptIDTextField" disable="true" layoutX="125.0" layoutY="440.0" promptText="Auto Gen - Disabled" />
+            <TextField fx:id="apptTitleTextField" layoutX="125.0" layoutY="480.0" />
+            <TextField fx:id="apptDescriptionTextField" layoutX="125.0" layoutY="520.0" />
+            <TextField fx:id="apptLocationTextField" layoutX="125.0" layoutY="560.0" />
+            <Label layoutX="25.0" layoutY="445.0" text="ID" />
+            <Label layoutX="25.0" layoutY="485.0" text="Title" />
+            <Label layoutX="25.0" layoutY="525.0" text="Description" />
+            <Label layoutX="25.0" layoutY="564.0" text="Location" />
+            <TextField fx:id="apptTypeTextField" layoutX="460.0" layoutY="440.0" />
+            <Label layoutX="360.0" layoutY="485.0" text="Contact" />
+            <Label layoutX="360.0" layoutY="525.0" text="Customer" />
+            <Label layoutX="360.0" layoutY="565.0" text="User" />
+            <Label layoutX="700.0" layoutY="485.0" text="Start Time" />
+            <Label layoutX="700.0" layoutY="525.0" text="End Date" />
+            <Label layoutX="700.0" layoutY="565.0" text="End Time" />
+            <ComboBox fx:id="apptContactCombo" layoutX="460.0" layoutY="480.0" prefWidth="150.0" />
+            <ComboBox fx:id="apptCustomerCombo" layoutX="460.0" layoutY="520.0" prefWidth="150.0" />
+            <ComboBox fx:id="apptUserCombo" layoutX="460.0" layoutY="560.0" prefWidth="150.0" />
+            <ComboBox fx:id="apptEndTimeCombo" layoutX="800.0" layoutY="560.0" prefWidth="150.0" promptText="Choose Time" />
+            <ComboBox fx:id="apptStartTimeCombo" layoutX="800.0" layoutY="480.0" prefWidth="150.0" promptText="Choose Time" />
+            <DatePicker fx:id="apptStartDatePicker" layoutX="800.0" layoutY="440.0" />
+            <Label layoutX="360.0" layoutY="445.0" text="Type" />
+            <Label layoutX="700.0" layoutY="445.0" text="Start Date" />
+            <DatePicker fx:id="apptEndDatePicker" layoutX="800.0" layoutY="520.0" />
+            <Button fx:id="clearButton" layoutX="56.0" layoutY="625.0" mnemonicParsing="false" onAction="#onActionClearButton" text="CLEAR" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="425.0" prefHeight="311.0" prefWidth="1003.0" style="-fx-border-color: gray;">
-         <children>
-            <TableView fx:id="custTable" layoutX="67.0" layoutY="53.0" prefHeight="198.0" prefWidth="866.0">
-              <columns>
-                <TableColumn fx:id="custIDCol" prefWidth="54.200016021728516" text="ID" />
-                <TableColumn fx:id="custNameCol" prefWidth="183.99998474121094" text="Name" />
-                  <TableColumn fx:id="custAddressCol" prefWidth="186.39996337890625" text="Address" />
-                  <TableColumn fx:id="custPostalCodeCol" prefWidth="126.60012817382812" text="Postal code" />
-                  <TableColumn fx:id="custDivisionCol" prefWidth="135.7999267578125" text="Division ID" />
-                  <TableColumn fx:id="custPhoneCol" prefWidth="178.5999755859375" text="Phone" />
-              </columns>
-            </TableView>
-            <Label layoutX="465.0" layoutY="20.0" text="Customers">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Button fx:id="customersAddButton" layoutX="410.0" layoutY="265.0" mnemonicParsing="false" onAction="#onActionCustomersAddButton" text="ADD" />
-            <Button fx:id="customersUpdateButton" layoutX="470.0" layoutY="265.0" mnemonicParsing="false" onAction="#onActionCustomersUpdateButton" text="UPDATE" />
-            <Button fx:id="custDeleteButton" layoutX="550.0" layoutY="265.0" mnemonicParsing="false" onAction="#onActionCustDeleteButton" text="DELETE" />
-         </children></AnchorPane>
       <Button fx:id="reportsButton" layoutX="426.0" layoutY="755.0" mnemonicParsing="false" onAction="#onActionReportsButton" prefHeight="30.0" prefWidth="148.0" text="REPORTS">
          <font>
             <Font size="14.0" />
@@ -72,5 +76,10 @@
          <font>
             <Font size="14.0" />
          </font></Button>
+      <Button fx:id="customersButton" layoutX="31.0" layoutY="755.0" mnemonicParsing="false" onAction="#onActionCustomersButton" text="CUSTOMERS">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

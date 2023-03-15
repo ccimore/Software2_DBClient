@@ -21,16 +21,16 @@
       <Label layoutX="25.0" layoutY="255.0" text="Country" />
       <Label layoutX="450.0" layoutY="135.0" text="Phone Number" />
       <Label layoutX="450.0" layoutY="255.0" text="State/Province" />
-      <Button layoutX="340.0" layoutY="350.0" mnemonicParsing="false" text="Save">
+      <Button fx:id="saveButton" layoutX="340.0" layoutY="350.0" mnemonicParsing="false" onAction="#onActionSaveButton" text="Save">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <TextField alignment="CENTER" disable="true" layoutX="145.0" layoutY="90.0" promptText="Auto Gen - Disabled" />
-      <TextField layoutX="145.0" layoutY="130.0" />
-      <TextField layoutX="145.0" layoutY="170.0" />
-      <TextField layoutX="145.0" layoutY="210.0" />
-      <TextField layoutX="570.0" layoutY="130.0" />
-      <ComboBox layoutX="145.0" layoutY="250.0" prefWidth="150.0" />
-      <ComboBox layoutX="570.0" layoutY="250.0" prefWidth="150.0" />
+      <TextField fx:id="customerIDText" alignment="CENTER" disable="true" layoutX="145.0" layoutY="90.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="customerNameText" layoutX="145.0" layoutY="130.0" />
+      <TextField fx:id="addressText" layoutX="145.0" layoutY="170.0" />
+      <TextField fx:id="postalCodeText" layoutX="145.0" layoutY="210.0" />
+      <TextField fx:id="phoneNumberText" layoutX="570.0" layoutY="130.0" />
+      <ComboBox fx:id="countryCombo" layoutX="145.0" layoutY="250.0" onAction="#onActionCountryCombo" prefWidth="150.0" />
+      <ComboBox fx:id="divisionCombo" layoutX="570.0" layoutY="250.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

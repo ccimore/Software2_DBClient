@@ -4,33 +4,58 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.c195.controller.CustomerController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.c195.controller.CustomerController">
    <children>
       <Label layoutX="360.0" layoutY="30.0" text="Customer">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Button fx:id="exitButton" layoutX="420.0" layoutY="350.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
+      <Button fx:id="exitButton" layoutX="732.0" layoutY="556.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Label layoutX="25.0" layoutY="95.0" text="Customer ID" />
-      <Label layoutX="25.0" layoutY="135.0" text="Customer Name" />
-      <Label layoutX="25.0" layoutY="175.0" text="Address" />
-      <Label layoutX="25.0" layoutY="215.0" text="Postal Code" />
-      <Label layoutX="25.0" layoutY="255.0" text="Country" />
-      <Label layoutX="450.0" layoutY="135.0" text="Phone Number" />
-      <Label layoutX="450.0" layoutY="255.0" text="State/Province" />
-      <Button fx:id="saveButton" layoutX="340.0" layoutY="350.0" mnemonicParsing="false" onAction="#onActionSaveButton" text="Save">
+      <Label layoutX="450.0" layoutY="385.0" text="Customer ID" />
+      <Label layoutX="25.0" layoutY="385.0" text="Customer Name" />
+      <Label layoutX="25.0" layoutY="425.0" text="Address" />
+      <Label layoutX="25.0" layoutY="465.0" text="Postal Code" />
+      <Label layoutX="25.0" layoutY="505.0" text="Country" />
+      <Label layoutX="450.0" layoutY="465.0" text="Phone Number" />
+      <Label layoutX="450.0" layoutY="505.0" text="State/Province" />
+      <Button fx:id="saveButton" layoutX="370.0" layoutY="556.0" mnemonicParsing="false" onAction="#onActionSaveButton" text="Update">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <TextField fx:id="custIDText" alignment="CENTER" disable="true" layoutX="145.0" layoutY="90.0" promptText="Auto Gen - Disabled" />
-      <TextField fx:id="custNameText" layoutX="145.0" layoutY="130.0" />
-      <TextField fx:id="custAddressText" layoutX="145.0" layoutY="170.0" />
-      <TextField fx:id="custPostalCodeText" layoutX="145.0" layoutY="210.0" />
-      <TextField fx:id="custPhoneText" layoutX="570.0" layoutY="130.0" />
-      <ComboBox fx:id="custCountryComboBox" layoutX="145.0" layoutY="250.0" prefWidth="150.0" />
-      <ComboBox fx:id="custDivisionComboBox" layoutX="570.0" layoutY="250.0" prefWidth="150.0" />
+      <TextField fx:id="custIDText" alignment="CENTER" disable="true" layoutX="570.0" layoutY="380.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="custNameText" layoutX="145.0" layoutY="380.0" />
+      <TextField fx:id="custAddressText" layoutX="145.0" layoutY="420.0" />
+      <TextField fx:id="custPostalCodeText" layoutX="145.0" layoutY="460.0" />
+      <TextField fx:id="custPhoneText" layoutX="570.0" layoutY="460.0" />
+      <ComboBox fx:id="custCountryComboBox" layoutX="145.0" layoutY="500.0" onAction="#onActionCountryComboBox" prefWidth="150.0" />
+      <ComboBox fx:id="custDivisionComboBox" layoutX="570.0" layoutY="500.0" prefWidth="150.0" />
+      <TableView fx:id="customerTable" layoutX="27.0" layoutY="91.0" prefHeight="232.0" prefWidth="747.0">
+        <columns>
+          <TableColumn fx:id="custIDCol" prefWidth="60.200016021728516" text="ID" />
+          <TableColumn fx:id="custNameCol" prefWidth="179.6000213623047" text="Name" />
+            <TableColumn fx:id="addressCol" prefWidth="174.0" text="Address" />
+            <TableColumn fx:id="postalCodeCol" prefWidth="99.60003662109375" text="Postal Code" />
+            <TableColumn fx:id="divisionCol" prefWidth="74.5999755859375" text="Division" />
+            <TableColumn fx:id="phoneCol" prefWidth="163.60003662109375" text="Phone" />
+        </columns>
+      </TableView>
+      <Button fx:id="addButton" layoutX="34.0" layoutY="556.0" mnemonicParsing="false" onAction="#onActionAddButton" text="Add">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteButton" layoutX="460.0" layoutY="556.0" mnemonicParsing="false" onAction="#onActionDeleteButton" text="Delete">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="clearButton" layoutX="290.0" layoutY="556.0" mnemonicParsing="false" onAction="#onActionClearButton" text="Clear">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
