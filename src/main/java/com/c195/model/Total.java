@@ -1,6 +1,6 @@
 package com.c195.model;
 
-public class Total {
+public abstract class Total {
 
     private int total;
 
