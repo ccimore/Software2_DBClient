@@ -30,7 +30,6 @@ public class DBReport {
         }
         monthTotalList = monthTotalObservableList;
         return monthTotalList;
-
     }
 
     public static ObservableList<TypeTotal> getAllTypeTotals() throws SQLException {

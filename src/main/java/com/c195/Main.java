@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
     @Override
@@ -29,16 +31,12 @@ public class Main extends Application {
 
         JDBC.openConnection();
 
+        ResourceBundle rb = ResourceBundle.getBundle("com/c195/language/login", Locale.getDefault());
+        if(Locale.getDefault().getLanguage().equals("en"))
+            System.out.println(rb.getString("Location"));
 
-
-
-        ObservableList<DivisionTotal> divList = DBReport.getAllDivisionTotals();
-
-        if (divList != null) {
-            System.out.println("List created.");
-        }
-
-
+        int login1 = DBLogin.loginCheck("admin", "admin");
+        System.out.println(login1);
 
         /*
 

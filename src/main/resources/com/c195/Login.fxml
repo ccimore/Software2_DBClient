@@ -15,14 +15,12 @@
       <TextField fx:id="loginUserNameTextField" layoutX="103.0" layoutY="108.0" onAction="#OnActionLoginUserNameText" />
       <Label fx:id="loginPasswordLabel" layoutX="25.0" layoutY="165.0" text="Password" />
       <TextField fx:id="loginPasswordTextField" layoutX="104.0" layoutY="161.0" onAction="#OnActionLoginPasswordText" />
-      <Label fx:id="loginLocationLabel" layoutX="26.0" layoutY="362.0" text="Location:" />
-      <Label fx:id="loginUserLocationLabel" layoutX="84.0" layoutY="362.0" text="User Location" />
+      <Label fx:id="loginUserLocationLabel" layoutX="25.0" layoutY="355.0" text="User Location" />
       <Button fx:id="loginButton" layoutX="445.0" layoutY="349.0" mnemonicParsing="false" onAction="#OnActionLoginButton" text="Login">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Label fx:id="languageLabel" layoutX="24.0" layoutY="250.0" text="Language" />
-      <ComboBox fx:id="languageComboBox" layoutX="104.0" layoutY="246.0" prefWidth="150.0" promptText="English" />
+      <Label fx:id="languageLabel" layoutX="228.0" layoutY="355.0" text="Language" />
       <Button fx:id="exitButton" layoutX="516.0" layoutY="349.0" mnemonicParsing="false" onAction="#onActionExitButton" text="Exit">
          <font>
             <Font size="14.0" />
