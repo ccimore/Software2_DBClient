@@ -25,17 +25,6 @@ public abstract class DBAppointment {
      * @throws SQLException
      */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException{
-        /*
-        ResultSet rs = null;
-        try {
-            String sql = "SELECT * FROM APPOINTMENTS";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-        } catch(SQLException e){
-            e.printStackTrace();
-        }
-
-         */
 
         String sql = "SELECT * FROM APPOINTMENTS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -97,6 +86,13 @@ public abstract class DBAppointment {
         return apptByContactList;
     }
 
+    /**
+     * Retrieves appointment data by customer ID from the database.
+     *
+     * @param custID Customer ID
+     * @return Appointment by customer list
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getApptByCustomerID(int custID) throws SQLException {
         String sql = "SELECT * FROM APPOINTMENTS WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -125,7 +121,7 @@ public abstract class DBAppointment {
     }
 
     /**
-     * Deletes appointment from database.
+     * Deletes appointment from database by appointment ID.
      *
      * @param apptID Appointment ID
      * @return Rows affected
@@ -228,24 +224,5 @@ public abstract class DBAppointment {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
-
-
-    /**
-     * Selects appointments from database.
-     *
-     * @throws SQLException
-     */
-    public static void select() throws SQLException {
-        String sql = "SELECT * FROM CUSTOMERS";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            int fruitId = rs.getInt("Customer_ID");
-            String fruitName = rs.getString("Customer_Name");
-            System.out.print(fruitId + " | ");
-            System.out.print(fruitName + "\n");
-        }
-    }
-
 
 }

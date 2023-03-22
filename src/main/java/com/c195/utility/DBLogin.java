@@ -20,7 +20,6 @@ public abstract class DBLogin {
     public static int loginCheck(String userName, String password) throws SQLException {
         try {
 
-
             String sql = "SELECT * FROM users WHERE User_Name = '" + userName + "' AND Password = '" + password + "'";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

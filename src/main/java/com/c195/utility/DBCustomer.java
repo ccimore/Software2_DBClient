@@ -105,22 +105,4 @@ public abstract class DBCustomer {
         return rowsAffected;
     }
 
-    /**
-     * Selects all customer data from customer table in database.
-     *
-     * @throws SQLException
-     */
-    public static void select() throws SQLException {
-        String sql = "SELECT * FROM CUSTOMERS";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            int fruitId = rs.getInt("Customer_ID");
-            String fruitName = rs.getString("Customer_Name");
-            System.out.print(fruitId + " | ");
-            System.out.print(fruitName + "\n");
-        }
-    }
-
-
 }
