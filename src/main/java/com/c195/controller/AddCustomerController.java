@@ -7,7 +7,7 @@ import com.c195.utility.DBCustomer;
 import com.c195.utility.DBFLDivision;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -20,6 +20,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the Add Customer form and FXML file.
+ */
 public class AddCustomerController implements Initializable {
 
     public Button exitButton;
@@ -34,9 +37,12 @@ public class AddCustomerController implements Initializable {
     Stage stage;
     Parent scene;
 
-
-
-
+    /**
+     * Exits Add Customer form and takes user back to Customer form on button action.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionExitButton(ActionEvent actionEvent) throws IOException {
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/com/c195/Customer.fxml"));
@@ -44,6 +50,13 @@ public class AddCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Adds Customer to database and takes user back to Customer form on button action.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onActionSaveButton(ActionEvent actionEvent) throws SQLException, IOException {
 
         if (customerNameText.getText().isEmpty() || addressText.getText().isEmpty() || postalCodeText.getText().isEmpty() || phoneNumberText.getText().isEmpty() || countryCombo.getValue() == null
@@ -69,15 +82,25 @@ public class AddCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sets division combo box based on country selected in country combo box on button action.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionCountryCombo(ActionEvent actionEvent) throws SQLException {
 
         Country selectedCountry = countryCombo.getSelectionModel().getSelectedItem();
         ObservableList<FirstLevelDivision> divByCountryList = DBFLDivision.getDivListByCountry(selectedCountry.getCountryId());
         divisionCombo.setItems(divByCountryList);
-
-         
     }
 
+    /**
+     * Initializes class and sets form for initialization state.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Country> countries;
@@ -88,17 +111,13 @@ public class AddCustomerController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         try {
             divisions = DBFLDivision.getAllDivisions();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         countryCombo.setItems(countries);
         divisionCombo.setItems(divisions);
-
     }
-
 
 }

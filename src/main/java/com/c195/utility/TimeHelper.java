@@ -5,8 +5,17 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TimeHelper {
+/**
+ * This abstract class assists with Time Date manipulation.
+ */
+public abstract class TimeHelper {
 
+    /**
+     * Converts Local date time to UTC.
+     *
+     * @param dateTime Local date time
+     * @return UTC date time
+     */
     public static LocalDateTime convertToUTC(LocalDateTime dateTime) {
 
         ZonedDateTime zoneDateTime = dateTime.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
@@ -14,19 +23,14 @@ public class TimeHelper {
         LocalDateTime UTCDateTime = zoneUTCDateTime.toLocalDateTime();
         return UTCDateTime;
 
-
-/*
-        Timestamp currentTimeStamp = Timestamp.valueOf(String.valueOf(dateTime));
-        LocalDateTime LDT = currentTimeStamp.toLocalDateTime();
-        ZonedDateTime ZDT = LDT.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
-        ZonedDateTime UTCDateTime = ZDT.withZoneSameInstant(ZoneId.of("UTC"));
-        LocalDateTime LDTOut = UTCDateTime.toLocalDateTime();
-        String UTCOut = LDTOut.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        return UTCOut;
-
- */
     }
 
+    /**
+     * Converts UTC to local date Time.
+     *
+     * @param UTCDateTime UTC date time
+     * @return Local date time
+     */
     public static LocalDateTime convertUTCToLocal(LocalDateTime UTCDateTime){
         ZonedDateTime UTCZoneDateTime = UTCDateTime.atZone(ZoneId.of("UTC"));
         ZonedDateTime localZoneDateTime = UTCZoneDateTime.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
@@ -34,6 +38,12 @@ public class TimeHelper {
         return localDateTime;
     }
 
+    /**
+     * Converts local date time to eastern date time.
+     *
+     * @param localDateTime Local date time
+     * @return Eastern date time
+     */
     public static LocalDateTime convertLocalToEst(LocalDateTime localDateTime){
         ZonedDateTime localZoneDateTime = localDateTime.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
         ZonedDateTime estZoneDateTime = localZoneDateTime.withZoneSameInstant(ZoneId.of("America/New_York"));

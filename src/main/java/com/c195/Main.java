@@ -1,5 +1,19 @@
 package com.c195;
 
+/**
+ *
+ * @author Chris Cimorelli
+ *
+ * An Appointment Management APplication
+ *
+ * My Javadocs folder is inside my src folder.
+ * From Project Structure tab, I added Maven Project library for mysql connector 8.0.25.
+ * Maven: mysql:mysql-connector-java:8.0.25
+ *
+ *
+ *
+ * */
+
 import com.c195.model.Appointment;
 import com.c195.model.Customer;
 import com.c195.model.DivisionTotal;
@@ -13,11 +27,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+
+/** This main class creates an application for appoinemnt management */
 public class Main extends Application {
+    /**
+     * The start method initializes the FXML stage and scene load of Login FXML file.
+     *
+     * @param stage The FXML stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
@@ -27,16 +52,49 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * The main method initializes the application.
+     *
+     * @param args The main args parameter
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
 
         JDBC.openConnection();
 
+        int workWeekStart = DayOfWeek.SUNDAY.getValue();
+        System.out.println(workWeekStart);
+
+        DayOfWeek monday = DayOfWeek.MONDAY;
+        DayOfWeek sunday = DayOfWeek.SUNDAY;
+
+
+
+        ObservableList<Appointment> custApptList = DBAppointment.getApptByCustomerID(2);
+        System.out.println(custApptList);
+        custApptList.forEach(Appointment -> {
+            System.out.println(Appointment.getEnd());
+            System.out.println(Appointment.getEnd());
+        });
+/*
         ResourceBundle rb = ResourceBundle.getBundle("com/c195/language/login", Locale.getDefault());
         if(Locale.getDefault().getLanguage().equals("en"))
             System.out.println(rb.getString("Location"));
 
         int login1 = DBLogin.loginCheck("admin", "admin");
         System.out.println(login1);
+
+        LocalTime startTimeAppt = LocalTime.of(8, 0);
+        LocalTime endTimeAppt = LocalTime.of(22, 0);
+
+
+        LocalDateTime startTimeLDT = LocalDateTime.of(LocalDate.now(), startTimeAppt);
+        LocalDateTime endTimeLDT = LocalDateTime.of(LocalDate.now(), endTimeAppt);
+        LocalDateTime estStartLDT = TimeHelper.convertLocalToEst(startTimeLDT);
+        System.out.println(estStartLDT);
+
+        ObservableList<Appointment> custApptList = DBAppointment.getApptByCustomerID(1);
+        System.out.println(custApptList);
 
         /*
 

@@ -10,12 +10,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DBReport {
+/**
+ * This abstract class assists with Report data from database.
+ */
+public abstract class DBReport {
 
     public static ObservableList<MonthTotal> monthTotalList;
     public static ObservableList<TypeTotal> typeTotalList;
     public static ObservableList<DivisionTotal> divisionTotalList;
 
+    /**
+     * Retrieves appointment total data by month from database.
+     *
+     * @return Month total list
+     * @throws SQLException
+     */
     public static ObservableList<MonthTotal> getAllMonthTotals() throws SQLException {
         String sql = "SELECT monthname(Start), COUNT(*) FROM APPOINTMENTS GROUP BY monthname(Start)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -32,6 +41,12 @@ public class DBReport {
         return monthTotalList;
     }
 
+    /**
+     * Retrieves appointment total data by type from database.
+     *
+     * @return Type total list
+     * @throws SQLException
+     */
     public static ObservableList<TypeTotal> getAllTypeTotals() throws SQLException {
         String sql = "SELECT Type, COUNT(*) FROM appointments GROUP BY Type";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -48,6 +63,12 @@ public class DBReport {
         return typeTotalList;
     }
 
+    /**
+     * Retrieves customer total data by division from database.
+     *
+     * @return customer total list by division
+     * @throws SQLException
+     */
     public static ObservableList<DivisionTotal> getAllDivisionTotals() throws SQLException {
         String sql = "SELECT first_level_divisions.Division_ID, Division, Count(customers.Division_ID) FROM first_level_divisions JOIN customers ON customers.Division_ID = first_level_divisions.Division_ID GROUP BY first_level_divisions.Division_ID";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

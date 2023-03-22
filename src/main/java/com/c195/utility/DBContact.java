@@ -8,8 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This abstract class assists with contact data in the database.
+ */
 public abstract class DBContact {
 
+    /**
+     * Retrieves all contacts from database.
+     *
+     * @return All contacts list
+     * @throws SQLException
+     */
     public static ObservableList<Contact> getAllContacts() throws SQLException{
         ObservableList<Contact> contactList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM contacts";

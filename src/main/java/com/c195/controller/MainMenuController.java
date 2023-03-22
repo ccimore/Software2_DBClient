@@ -19,15 +19,17 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The class controls the Main Menu form and FXML file.
+ */
 public class MainMenuController implements Initializable {
 
-
+    Stage stage;
+    Parent scene;
     public ToggleGroup Tgroup;
     public Button customersButton;
     public TextField apptIDTextField;
@@ -43,9 +45,6 @@ public class MainMenuController implements Initializable {
     public DatePicker apptStartDatePicker;
     public DatePicker apptEndDatePicker;
     public Button clearButton;
-    Stage stage;
-    Parent scene;
-
     public TableView<Appointment> apptTable;
     public TableColumn<?, ?> apptIDCol;
     public TableColumn<?, ?> apptTitleCol;
@@ -87,37 +86,12 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
-    public void onActionCustomersUpdateButton(ActionEvent actionEvent) throws IOException {
-
-        stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/com/c195/Customer.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
-
-        /*
-
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/c195/Customer.fxml"));
-            loader.load();
-
-            CustomerController custController = loader.getController();
-            custController.sendCustomer(custTable.getSelectionModel().getSelectedIndex(), custTable.getSelectionModel().getSelectedItem());
-
-            stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Parent scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.show();
-        } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning Dialog");
-            alert.setContentText("Please select customer to update!");
-            alert.showAndWait();
-        }
-
-         */
-    }
-
+    /**
+     * Takes user to Reports form.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionReportsButton(ActionEvent actionEvent) throws IOException {
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/com/c195/Report.fxml"));
@@ -125,6 +99,12 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Takes user to Add Appointment form.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionApptAddButton(ActionEvent actionEvent) throws IOException {
 
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -133,6 +113,14 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Modifies database with updated appointment data on button action.
+     * Checks for any appointment conflicts before updating.
+     *
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void onActionApptUpdateButton(ActionEvent actionEvent) throws IOException, SQLException {
         if(apptTitleTextField.getText().isEmpty() || apptDescriptionTextField.getText().isEmpty() || apptLocationTextField.getText().isEmpty() || apptTypeTextField.getText().isEmpty()
                 || apptStartDatePicker.getChronology() == null || apptStartTimeCombo.getValue() == null || apptEndDatePicker.getChronology() == null
@@ -156,16 +144,60 @@ public class MainMenuController implements Initializable {
         User user = apptUserCombo.getValue();
         LocalDateTime startDateTime = LocalDateTime.of(apptDateStart, apptTimeStart);
         LocalDateTime endDateTime = LocalDateTime.of(apptDateEnd, apptTimeEnd);
-        LocalDateTime startDateTimeUTC = TimeHelper.convertToUTC(startDateTime);
-        LocalDateTime endDateTimeUTC = TimeHelper.convertToUTC(endDateTime);
 
-        DBAppointment.update(apptID, title, description, location, type, startDateTimeUTC, endDateTimeUTC, customer.getCustomerId(), user.getUserId(), contact.getContactId());
+
+
+        ObservableList<Appointment> custApptList = DBAppointment.getApptByCustomerID(customer.getCustomerId());
+        int workWeekStart = DayOfWeek.MONDAY.getValue();
+        int workWeekEnd = DayOfWeek.FRIDAY.getValue();
+        int apptStartWeek = startDateTime.toLocalDate().getDayOfWeek().getValue();
+        int apptEndWeek = endDateTime.toLocalDate().getDayOfWeek().getValue();
+
+
+
+        if ((endDateTime.isBefore(startDateTime)) || (startDateTime.isEqual(endDateTime))){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid appointment start and end times!");
+            alert.showAndWait();
+            return;
+        }
+
+        if (apptStartWeek > workWeekEnd || apptEndWeek > workWeekEnd){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Appointments can only be set Monday through Friday!");
+            alert.showAndWait();
+            return;
+        }
+
+        for (Appointment appt : custApptList){
+            if (appt.getAppointmentId() != apptID){
+                if((appt.getStart().isEqual(startDateTime)) || (appt.getStart().isAfter(startDateTime)) && appt.getStart().isBefore(endDateTime)){
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment times overlap with existing appointment!");
+                    alert.showAndWait();
+                    return;
+
+                }
+                if (appt.getEnd().isAfter(startDateTime) && (appt.getEnd().isBefore(endDateTime) || appt.getEnd().isEqual(endDateTime))) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment times overlap with existing appointment!");
+                    alert.showAndWait();
+                    return;
+                }
+                if (((appt.getStart().isBefore(startDateTime)) || appt.getStart().isEqual(startDateTime)) && (appt.getEnd().isAfter(endDateTime) || appt.getEnd().isEqual(endDateTime))){
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Appointment times overlap with existing appointment!");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+        }
+        DBAppointment.update(apptID, title, description, location, type, startDateTime, endDateTime, customer.getCustomerId(), user.getUserId(), contact.getContactId());
         ObservableList<Appointment> updatedApptList = DBAppointment.getAllAppointments();
         apptTable.setItems(updatedApptList);
-
-
     }
 
+    /**
+     * Deletes appointment from database on button action.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionApptDeleteButton(ActionEvent actionEvent) throws SQLException {
 
         Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
@@ -187,7 +219,12 @@ public class MainMenuController implements Initializable {
         }
     }
 
-
+    /**
+     * Displays appointments by week on button action.
+     * Lambda #1 - Replaced for loop to check appointment weeks for more concise code.
+     *
+     * @param actionEvent
+     */
     public void onActionApptWeekRadioB(ActionEvent actionEvent) {
         try {
             ObservableList<Appointment> allApptList = DBAppointment.getAllAppointments();
@@ -197,7 +234,7 @@ public class MainMenuController implements Initializable {
             LocalDateTime endCurrentWeek = LocalDateTime.now().plusWeeks(1);
 
             if (allApptList != null)
-                allApptList.forEach(appointment -> {
+                allApptList.forEach(appointment -> {  //lambda #1
                     if (appointment.getStart().isAfter(startCurrentWeek) && appointment.getEnd().isBefore(endCurrentWeek)){
                         weekApptList.add(appointment);
                     }
@@ -208,6 +245,12 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    /**
+     * Displays appointments by month on button action.
+     * Lambda #2 - Replaced for loop to check appointment times for more concise code.
+     *
+     * @param actionEvent
+     */
     public void onActionMonthRadioB(ActionEvent actionEvent) {
         try {
             ObservableList<Appointment> allApptList = DBAppointment.getAllAppointments();
@@ -217,7 +260,7 @@ public class MainMenuController implements Initializable {
             LocalDateTime endCurrentMonth = LocalDateTime.now().plusMonths(1);
 
             if (allApptList != null)
-                allApptList.forEach(appointment -> {
+                allApptList.forEach(appointment -> {  //lambda #2
                     if (appointment.getStart().isAfter(startCurrentMonth) && appointment.getEnd().isBefore(endCurrentMonth)){
                         monthApptList.add(appointment);
                     }
@@ -228,6 +271,11 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    /**
+     * Displays all appointments on radio button action.
+     *
+     * @param actionEvent
+     */
     public void onActionApptAllRadioB(ActionEvent actionEvent) {
         try {
             ObservableList<Appointment> allApptList = DBAppointment.getAllAppointments();
@@ -240,41 +288,22 @@ public class MainMenuController implements Initializable {
         }
     }
 
-    public void onActionCustDeleteButton(ActionEvent actionEvent) throws SQLException {
-/*
-
-        Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
-
-        if (selectedCustomer == null) {
-            Alert noCustomer = new Alert(Alert.AlertType.ERROR, "Please select customer to delete!");
-            noCustomer.showAndWait();
-            return;
-        }
-        if (selectedCustomer != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will delete customer record.  Are you sure you want to continue?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                DBAppointment.deleteAppointmentByCustID(selectedCustomer.getCustomerId());
-                DBCustomer.delete(selectedCustomer.getCustomerId());
-                apptTable.setItems(DBAppointment.getAllAppointments());
-                custTable.setItems(DBCustomer.getAllCustomers());
-            }
-
-        }
-
-
-        //SELECT X,Y,Z FROM CUSTOMER TABLE JOIN DIVISION TABLE ON CUSTOMER TABLE DIVISION ID = DIVISION TABLE DIVISION ID;
-
-
- */
-
-    }
-
+    /**
+     * Closes the database connection and program on button action.
+     *
+     * @param actionEvent
+     */
     public void onActionLogoutButton(ActionEvent actionEvent) {
         JDBC.closeConnection();
         System.exit(0);
     }
 
+    /**
+     * Takes user to Customer form on button action.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionCustomersButton(ActionEvent actionEvent) throws IOException {
 
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -283,7 +312,11 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Clears test fields, combo boxes, and date pickers of data on button action.
+     *
+     * @param actionEvent
+     */
     public void onActionClearButton(ActionEvent actionEvent) {
         apptIDTextField.clear();
         apptTitleTextField.clear();
@@ -300,6 +333,14 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * Initializes class and sets form to initialization state.
+     * Implements listener on table to set fields, combo boxes, and date pickers.
+     * Lambda #3 - uses lambda in listener method to set up event handling.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
 
@@ -311,21 +352,14 @@ public class MainMenuController implements Initializable {
         LocalTime startTimeAppt = LocalTime.of(8, 0);
         LocalTime endTimeAppt = LocalTime.of(22, 0);
 
-        while (startTimeAppt.isBefore(endTimeAppt.plusSeconds(1))) {
-            apptTimeList.add(startTimeAppt);
-            startTimeAppt = startTimeAppt.plusMinutes(15);
+        LocalDateTime startTimeLDT = LocalDateTime.of(LocalDate.now(), startTimeAppt);
+        LocalDateTime endTimeLDT = LocalDateTime.of(LocalDate.now(), endTimeAppt);
+        LocalDateTime estStartLDT = TimeHelper.convertLocalToEst(startTimeLDT);
+        LocalDateTime estEndLDT = TimeHelper.convertLocalToEst(endTimeLDT);
 
-
-        /*
-        LocalTime startTimeAppt = LocalTime.MIN.plusHours(8);
-        LocalTime endTimeAppt = LocalTime.MAX.minusHours(1).minusMinutes(45);
-
-        if (!startTimeAppt.equals(0) || !endTimeAppt.equals(0)){
-            while (startTimeAppt.isBefore(endTimeAppt)) {
-                apptTimeList.add(startTimeAppt);
-                startTimeAppt = startTimeAppt.plusMinutes(15);
-            }
-            */
+        while (estStartLDT.isBefore(estEndLDT.plusSeconds(1))){
+            apptTimeList.add(estStartLDT.toLocalTime());
+            estStartLDT = estStartLDT.plusMinutes(15);
         }
 
         apptStartTimeCombo.setItems(apptTimeList);
@@ -333,7 +367,6 @@ public class MainMenuController implements Initializable {
 
         apptEndTimeCombo.setItems(apptTimeList);
         apptEndTimeCombo.setPromptText("Choose End Time");
-
 
         try {
             contacts = DBContact.getAllContacts();
@@ -362,8 +395,6 @@ public class MainMenuController implements Initializable {
         apptContactCombo.setVisibleRowCount(5);
         apptContactCombo.setPromptText("Choose Contact");
 
-
-
         try {
             apptTable.setItems(DBAppointment.getAllAppointments());
         } catch (SQLException e) {
@@ -381,21 +412,20 @@ public class MainMenuController implements Initializable {
         apptUserIDCol.setCellValueFactory(new PropertyValueFactory<>("apptUserId"));
         apptContactIDCol.setCellValueFactory(new PropertyValueFactory<>("apptContactId"));
 
+        // lambda #3
         apptTable.getSelectionModel().selectedItemProperty().addListener((obs, oldAppointment, newAppointment) -> {
             if (newAppointment != null) {
                 Appointment selectedAppt = newAppointment;
-                LocalDateTime startLocalDateTime = TimeHelper.convertUTCToLocal(selectedAppt.getStart());
-                LocalDateTime endLocalDateTime = TimeHelper.convertUTCToLocal(selectedAppt.getEnd());
 
                 apptIDTextField.setText(String.valueOf(selectedAppt.getAppointmentId()));
                 apptTitleTextField.setText(selectedAppt.getAppointmentTitle());
                 apptDescriptionTextField.setText(selectedAppt.getAppointmentDescription());
                 apptLocationTextField.setText(selectedAppt.getAppointmentLocation());
                 apptTypeTextField.setText(selectedAppt.getAppointmentType());
-                apptStartDatePicker.setValue(startLocalDateTime.toLocalDate());
-                apptStartTimeCombo.setValue(startLocalDateTime.toLocalTime());
-                apptEndDatePicker.setValue(endLocalDateTime.toLocalDate());
-                apptEndTimeCombo.setValue(endLocalDateTime.toLocalTime());
+                apptStartDatePicker.setValue(selectedAppt.getStart().toLocalDate());
+                apptStartTimeCombo.setValue(selectedAppt.getStart().toLocalTime());
+                apptEndDatePicker.setValue(selectedAppt.getEnd().toLocalDate());
+                apptEndTimeCombo.setValue(selectedAppt.getEnd().toLocalTime());
 
                 for(int i = 0; i < apptContactCombo.getItems().size(); i++){
                     Contact potentialContact = apptContactCombo.getItems().get(i);
@@ -420,36 +450,8 @@ public class MainMenuController implements Initializable {
                         break;
                     }
                 }
-
-
-
             }
         });
-
-
-
-
-/*
-
-
-        try {
-            custTable.setItems(DBCustomer.getAllCustomers());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        custIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        custNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        custAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
-        custPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
-        custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-        custDivisionCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
-
-
- */
-
     }
-
-
 
 }

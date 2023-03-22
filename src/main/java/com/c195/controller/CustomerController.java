@@ -24,6 +24,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the Customer form and FXML file.
+ */
 public class CustomerController implements Initializable {
 
     Stage stage;
@@ -46,8 +49,14 @@ public class CustomerController implements Initializable {
     public ComboBox<Country> custCountryComboBox;
     public ComboBox<FirstLevelDivision> custDivisionComboBox;
     public TextField custIDText;
+    boolean setByProgram = false;
 
-
+    /**
+     * Exits the Customer form and takes user back to Main Menu form on button action.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionExitButton(ActionEvent actionEvent) throws IOException {
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/com/c195/MainMenu.fxml"));
@@ -55,6 +64,12 @@ public class CustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Updates database with modified customer data on button action.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionSaveButton(ActionEvent actionEvent) throws SQLException {
         if (custNameText.getText().isEmpty() || custAddressText.getText().isEmpty() || custPostalCodeText.getText().isEmpty() || custPhoneText.getText().isEmpty() || custCountryComboBox.getValue() == null
                 || custDivisionComboBox.getValue() == null) {
@@ -74,16 +89,26 @@ public class CustomerController implements Initializable {
         customerTable.setItems(updatedCustomerList);
     }
 
+    /**
+     * Takes user to Add Customer form on button action.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionAddButton(ActionEvent actionEvent) throws IOException {
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/com/c195/AddCustomer.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
-
     }
 
+    /**
+     * Deletes customer from database on button action.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionDeleteButton(ActionEvent actionEvent) throws SQLException {
-
         Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 
         if (selectedCustomer == null) {
@@ -97,14 +122,18 @@ public class CustomerController implements Initializable {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 DBAppointment.deleteAppointmentByCustID(selectedCustomer.getCustomerId());
                 DBCustomer.delete(selectedCustomer.getCustomerId());
-
                 customerTable.setItems(DBCustomer.getAllCustomers());
                 onActionClearButton(null);
             }
         }
     }
 
-    public void onActionClearButton(ActionEvent actionEvent) {
+    /**
+     * Clears text fields and combo boxes of data on button action.
+     *
+     * @param actionEvent
+     */
+    public void onActionClearButton(ActionEvent actionEvent) throws SQLException {
         custIDText.clear();
         custNameText.clear();
         custAddressText.clear();
@@ -114,16 +143,30 @@ public class CustomerController implements Initializable {
         custCountryComboBox.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Sets Division Combo box based on Country selected in Country combo box.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionCountryComboBox(ActionEvent actionEvent) throws SQLException {
-/*
-        Country selectedCountry = custCountryComboBox.getSelectionModel().getSelectedItem();
-        ObservableList<FirstLevelDivision> divByCountryList = DBFLDivision.getDivListByCountry(selectedCountry.getCountryId());
-        custDivisionComboBox.setItems(divByCountryList);
-        custCountryComboBox.getSelectionModel().clearSelection();
-
- */
+        if (setByProgram == true){
+            return;
+        } else {
+            Country selectedCountry = custCountryComboBox.getSelectionModel().getSelectedItem();
+            ObservableList<FirstLevelDivision> divByCountryList = DBFLDivision.getDivListByCountry(selectedCountry.getCountryId());
+            custDivisionComboBox.setItems(divByCountryList);
+        }
     }
 
+    /**
+     * Initializes class and sets form for initialization state.
+     * Implements listener on table to set fields and combo boxes.
+     * Lambda #4 - uses lambda in listener method to set up event handling.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Customer> customers;
@@ -135,14 +178,11 @@ public class CustomerController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         try {
             divisions = DBFLDivision.getAllDivisions();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
         try {
             customers = DBCustomer.getAllCustomers();
 
@@ -165,7 +205,7 @@ public class CustomerController implements Initializable {
         custDivisionComboBox.setVisibleRowCount(5);
         custDivisionComboBox.setPromptText("Choose Division");
 
-
+        //lambda #4
         customerTable.getSelectionModel().selectedItemProperty().addListener((obs, oldCustomer, newCustomer) -> {
             if (newCustomer != null) {
                 Customer selectedCustomer = newCustomer;
@@ -174,11 +214,12 @@ public class CustomerController implements Initializable {
                 custAddressText.setText(selectedCustomer.getCustomerAddress());
                 custPostalCodeText.setText(selectedCustomer.getCustomerPostalCode());
                 custPhoneText.setText(selectedCustomer.getCustomerPhone());
+                custDivisionComboBox.setItems(divisions);
 
-                for(int i = 0; i < custDivisionComboBox.getItems().size(); i++){
-                    FirstLevelDivision potentialDivision = custDivisionComboBox.getItems().get(i);
-                    if(potentialDivision.getFirstLevelDivisionId() == selectedCustomer.getCustomerDivisionId()) {
-                        custDivisionComboBox.setValue(potentialDivision);
+                for (int i = 0; i < divisions.size(); i++) {
+                    setByProgram = true;
+                    FirstLevelDivision potentialDivision = divisions.get(i);
+                    if (potentialDivision.getFirstLevelDivisionId() == selectedCustomer.getCustomerDivisionId()) {
                         Country selectCountry;
                         try {
                             selectCountry = DBCountry.getCountry(potentialDivision.getFLDivCountryId());
@@ -186,13 +227,13 @@ public class CustomerController implements Initializable {
                             throw new RuntimeException(e);
                         }
                         custCountryComboBox.setValue(selectCountry);
+                        custDivisionComboBox.setValue(potentialDivision);
+                        break;
                     }
                 }
-
-
+                setByProgram = false;
             }
         });
     }
-
 
 }

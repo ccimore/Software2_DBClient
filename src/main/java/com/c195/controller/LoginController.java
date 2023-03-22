@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -26,27 +26,30 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the Login form and FXML file.
+ */
 public class LoginController implements Initializable{
 
     public TextField loginUserNameTextField;
     public TextField loginPasswordTextField;
     public Button loginButton;
-    public ComboBox languageComboBox;
     public Label loginUserNameLabel;
     public Label loginPasswordLabel;
-    public Label loginLocationLabel;
     public Label loginUserLocationLabel;
     public Label languageLabel;
     public Button exitButton;
     Stage stage;
     Parent scene;
 
-    public void OnActionLoginUserNameText(ActionEvent actionEvent) {
-    }
-
-    public void OnActionLoginPasswordText(ActionEvent actionEvent) {
-    }
-
+    /**
+     * Validates user input and checks for appointments within 15 minutes after validated login on button action.
+     * Writes user login attempt to login_activity.txt
+     *
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void OnActionLoginButton(ActionEvent actionEvent) throws IOException, SQLException {
         try {
 
@@ -111,19 +114,26 @@ public class LoginController implements Initializable{
         }
     }
 
+    /**
+     * Closes database connection and program on button action.
+     *
+     * @param actionEvent
+     */
     public void onActionExitButton(ActionEvent actionEvent) {
         JDBC.closeConnection();
         System.exit(0);
     }
 
-    public void onActionLanguageComboBox(ActionEvent actionEvent) {
-    }
 
+    /**
+     * Initializes class and sets form for initialization state.
+     * Sets and uses locale to implement language resources.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
 
         try
         {
@@ -150,10 +160,7 @@ public class LoginController implements Initializable{
         {
             System.out.println(e);
         }
-
-
     }
-
 
 }
 

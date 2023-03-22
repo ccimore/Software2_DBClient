@@ -9,8 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This abstract class assists with User data in database.
+ */
 public abstract class DBUser {
 
+    /**
+     * Retrieves all user data from User table in database.
+     *
+     * @return All user list
+     * @throws SQLException
+     */
     public static ObservableList<User> getAllUsers() throws SQLException {
         ObservableList<User> allUsersList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM users";
@@ -26,51 +35,12 @@ public abstract class DBUser {
         return allUsersList;
     }
 
-    public static int userLoginCheck(String userName, String password){
-        try{
-            String sql = "SELECT * FROM USERS WHERE User_Name = ? AND password = ?";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setString(1, userName);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            if (rs.getString("User_Name").equals(userName)){
-                if (rs.getString("Password").equals(password)){
-                    return rs.getInt("User_ID");
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return -1;
-    }
 
-    public static int insert(String userName, String password) throws SQLException {
-        String sql = "INSERT INTO USERS (User_Name, Password) VALUES(?, ?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, userName);
-        ps.setString(2, password);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
-    }
-
-    public static int update(int userID, String userName) throws SQLException {
-        String sql = "UPDATE USERS SET User_Name = ? WHERE User_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, userName);
-        ps.setInt(2, userID);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
-    }
-
-    public static int delete(int userID) throws SQLException {
-        String sql = "DELETE FROM USERS WHERE User_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, userID);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
-    }
-
+    /**
+     * Retrieves users from user table in database.
+     *
+     * @throws SQLException
+     */
     public static void select() throws SQLException {
         String sql = "SELECT * FROM USERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -83,6 +53,12 @@ public abstract class DBUser {
         }
     }
 
+    /**
+     * Retrieves user from user table in database by user name.
+     *
+     * @param userName User name
+     * @throws SQLException
+     */
     public static void select(String userName) throws SQLException {
         String sql = "SELECT * FROM USERS WHERE User_Name = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

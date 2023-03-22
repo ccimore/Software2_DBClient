@@ -19,6 +19,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This class controls the Reports form and FXML file.
+ */
 public class ReportController implements Initializable {
 
     Stage stage;
@@ -43,8 +46,12 @@ public class ReportController implements Initializable {
     public TableColumn<?, ?> monthTotalCol;
 
 
-
-
+    /**
+     * Takes user to Main Menu form on button action.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onActionExitButton(ActionEvent actionEvent) throws IOException {
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/com/c195/MainMenu.fxml"));
@@ -52,6 +59,12 @@ public class ReportController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Sets appointment table to appointments of selected contact on combo box action.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onActionContactCombo(ActionEvent actionEvent) throws SQLException {
         Contact selectedContact = contactCombo.getSelectionModel().getSelectedItem();
         ObservableList<Appointment> apptByContactList = DBAppointment.getApptByContactID(selectedContact.getContactId());
@@ -65,9 +78,12 @@ public class ReportController implements Initializable {
         custIDCol.setCellValueFactory(new PropertyValueFactory<>("apptCustomerId"));
     }
 
-
-
-
+    /**
+     * Initializes class and sets form to initialization state.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Contact> contactsList;
@@ -125,6 +141,5 @@ public class ReportController implements Initializable {
         divisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
         divisionTotalCustCol.setCellValueFactory(new PropertyValueFactory<>("total"));
     }
-
 
 }

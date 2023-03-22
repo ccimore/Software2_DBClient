@@ -4,8 +4,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DBLogin {
+/**
+ * This abstract class assists with login data from database.
+ */
+public abstract class DBLogin {
 
+    /**
+     * Retrieves user login data from database.
+     *
+     * @param userName User name
+     * @param password Password
+     * @return User ID or -1
+     * @throws SQLException
+     */
     public static int loginCheck(String userName, String password) throws SQLException {
         try {
 

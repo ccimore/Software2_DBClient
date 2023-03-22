@@ -9,8 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This abstract class assists with Customer data in database.
+ */
 public abstract class DBCustomer {
 
+    /**
+     * Retrieves all customer data from customers table in database.
+     *
+     * @return All customers list
+     * @throws SQLException
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException{
 
         String sql = "SELECT * FROM CUSTOMERS";
@@ -33,7 +42,17 @@ public abstract class DBCustomer {
         return customerObservableList;
     }
 
-
+    /**
+     * Inserts customer data into customer table in database.
+     *
+     * @param customerName Customer name
+     * @param address Customer address
+     * @param postalCode Customer postal code
+     * @param phone customer phone
+     * @param divisionID Customer division ID
+     * @return Rows affected
+     * @throws SQLException
+     */
     public static int insert(String customerName, String address, String postalCode, String phone, int divisionID) throws SQLException {
         String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -46,6 +65,18 @@ public abstract class DBCustomer {
         return rowsAffected;
     }
 
+    /**
+     * Updates customer data in customers table in database by customer ID.
+     *
+     * @param customerID Customer ID
+     * @param customerName Customer name
+     * @param customerAddress Customer address
+     * @param postalCode Customer postal code
+     * @param phone Customer phone
+     * @param divID Customer division ID
+     * @return Rows affected
+     * @throws SQLException
+     */
     public static int update(int customerID, String customerName, String customerAddress, String postalCode, String phone, int divID) throws SQLException {
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -59,6 +90,13 @@ public abstract class DBCustomer {
         return rowsAffected;
     }
 
+    /**
+     * Deletes customer from database by customer ID.
+     *
+     * @param customerID Customer ID
+     * @return Rows affected
+     * @throws SQLException
+     */
     public static int delete(int customerID) throws SQLException {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -67,6 +105,11 @@ public abstract class DBCustomer {
         return rowsAffected;
     }
 
+    /**
+     * Selects all customer data from customer table in database.
+     *
+     * @throws SQLException
+     */
     public static void select() throws SQLException {
         String sql = "SELECT * FROM CUSTOMERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -79,18 +122,5 @@ public abstract class DBCustomer {
         }
     }
 
-    public static void select(int colorId) throws SQLException {
-        String sql = "SELECT * FROM CUSTOMERS WHERE Division_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, colorId);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            int fruitId = rs.getInt("Customer_ID");
-            String fruitName = rs.getString("Customer_Name");
-            int colorIdFK = rs.getInt("Division_ID");
-            System.out.print(fruitId + " | ");
-            System.out.print(fruitName + " | ");
-            System.out.print(colorIdFK + "\n");
-        }
-    }
+
 }

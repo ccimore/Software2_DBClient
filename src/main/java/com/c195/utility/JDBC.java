@@ -3,6 +3,9 @@ package com.c195.utility;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * This abstract class assists with connection to mySQL database.
+ */
 public abstract class JDBC {
 
     private static final String protocol = "jdbc";
@@ -15,6 +18,9 @@ public abstract class JDBC {
     private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
+    /**
+     * Opens connection to database.
+     */
     public static void openConnection()
     {
         try {
@@ -29,6 +35,9 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Closes connection to database.
+     */
     public static void closeConnection() {
         try {
             connection.close();
