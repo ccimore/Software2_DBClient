@@ -336,6 +336,7 @@ public class MainMenuController implements Initializable {
     /**
      * Initializes class and sets form to initialization state.
      * Implements listener on table to set fields, combo boxes, and date pickers.
+     * Sets appointment time options in time combo boxes to eastern time relative to user time zone.
      * Lambda #3 - uses lambda in listener method to set up event handling.
      *
      * @param url

@@ -4,13 +4,14 @@ package com.c195;
  *
  * @author Chris Cimorelli
  *
- * An Appointment Management Application
+ * An Appointment Management Application - iCalendar (DBClientAppV5)
  *
- * My Javadocs folder is inside my src folder.
- * From Project Structure tab, I added Maven Project library for mysql connector 8.0.25.
+ * From Project Structure tab, I added Maven Project library for mysql connector 8.0.25 from the Maven repository.
  * Maven: mysql:mysql-connector-java:8.0.25
  * login_activity.txt file is in project folder.
- *
+ * README.txt file is in project folder
+ * My Javadoc folder is in project folder.
+ * Lambdas are found in MainMenuController and CustomerController,
  *
  *
  *
