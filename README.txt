@@ -4,11 +4,6 @@ iCalendar (DBClientAppV5)
 The purpose of this application is to provide a GUI based appointment scheduling application that interfaces
 with a database.
 
-Created by Chris Cimorelli
-ccimore@wgu.edu
-student application version 5
-03/22/2023
-
 IntelliJ IDEA 2022.3.1 (Community Edition)
 Java SE Development Kit 17.0.6 (64bit)
 JavaFX: openjfx-17.0.2
